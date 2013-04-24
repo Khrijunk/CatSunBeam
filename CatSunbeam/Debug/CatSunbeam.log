@@ -1,0 +1,24 @@
+﻿Build started 4/23/2013 7:58:09 PM.
+     1>Project "C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\CatSunbeam\CatSunbeam.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt DirectXHelper.cpp Lighting/Lighting.cpp Main.cpp Model/Model.cpp Particles/Particles.cpp Scene/Scene.cpp
+         Scene.cpp
+         Particles.cpp
+         Model.cpp
+         Main.cpp
+         Lighting.cpp
+         DirectXHelper.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\Debug\CatSunbeam.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\Debug\CatSunbeam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\Debug\CatSunbeam.lib" /MACHINE:X86 Debug\DirectXHelper.obj
+         Debug\Lighting.obj
+         Debug\Main.obj
+         Debug\Model.obj
+         Debug\Particles.obj
+         Debug\Scene.obj
+         CatSunbeam.vcxproj -> C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\Debug\CatSunbeam.exe
+     1>Done Building Project "C:\Users\Michael\Documents\Visual Studio 2012\Projects\CatSunbeam\CatSunbeam\CatSunbeam.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.12
