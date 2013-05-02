@@ -65,7 +65,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera/Camera.cpp" />
     <ClCompile Include="DirectXHelper.cpp" />
+    <ClCompile Include="Input/Input.cpp" />
     <ClCompile Include="Lighting/Lighting.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model/Model.cpp" />
@@ -73,8 +75,10 @@
     <ClCompile Include="Scene/Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera/Camera.h" />
     <ClInclude Include="DirectXHelper.h" />
     <ClInclude Include="Includes.h" />
+    <ClInclude Include="Input/Input.h" />
     <ClInclude Include="Lighting/Lighting.h" />
     <ClInclude Include="Model/Model.h" />
     <ClInclude Include="Particles/Particles.h" />
