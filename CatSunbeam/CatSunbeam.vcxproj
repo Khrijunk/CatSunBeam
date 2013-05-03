@@ -72,6 +72,7 @@
     <ClCompile Include="Lighting/Lighting.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model/Model.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Particles/Particles.cpp" />
     <ClCompile Include="Picking.cpp" />
     <ClCompile Include="Scene/Scene.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="Input/Input.h" />
     <ClInclude Include="Lighting/Lighting.h" />
     <ClInclude Include="Model/Model.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="Particles/Particles.h" />
     <ClInclude Include="Picking.h" />
     <ClInclude Include="Scene/Scene.h" />
