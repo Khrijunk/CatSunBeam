@@ -20,7 +20,6 @@ public:
 
 private:
 	LPDIRECT3DDEVICE9 d3ddev;
-	
 
 	float newYAngle;
 	float xDirection;

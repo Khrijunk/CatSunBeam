@@ -1,6 +1,6 @@
 #include "Includes.h"
 #include "DirectXHelper.h"
-#include "Particles.h"
+//#include "Particles.h"
 
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -16,7 +16,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
     WNDCLASSEX wc;
 	DirectXHelper* helper = new DirectXHelper();
     ZeroMemory(&wc, sizeof(WNDCLASSEX));
-	Particles p;
 
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_HREDRAW | CS_VREDRAW;

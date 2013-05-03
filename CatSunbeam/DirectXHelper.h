@@ -6,6 +6,7 @@
 #include "Camera/Camera.h"
 #include "Input/Input.h"
 #include "Textbox/Textbox.h"
+#include "Particles/Particles.h";
 
 class DirectXHelper
 {
@@ -25,6 +26,7 @@ private:
 	Camera* camera;
 	Input* input;
 	Textbox* textbox;
+	Particles* p;
 
 	float newYAngle;
 	float xPosition;

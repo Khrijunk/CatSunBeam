@@ -1,7 +1,5 @@
 #include "DirectXHelper.h"
-#include "Particles.h";
 
-Particles p;
 // this function initializes and prepares Direct3D for use
 void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 {
@@ -43,10 +41,12 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	camera = new Camera(d3ddev);
 	textbox = new Textbox(d3ddev, 48, rect);
 	input = new Input(d3ddev, camera, textbox);
+	p = new Particles();
 	
-
 	input->initDInput(hInstance, hWnd);
-	p.intBuffers(d3ddev);
+	
+	//p->initBuffer(v_buffer);
+	p->intBuffers(d3ddev);
 	//p.set_particle(camera->xPosition,camera->yPosition,camera->zPosition,d3ddev);
 	//p.active = true;
 }
@@ -69,13 +69,20 @@ void DirectXHelper::renderFrame(void)
 	input->CheckForInput();
 	camera->SetCamera();
 	textbox->Draw();
-
+	
 	// select the vertex buffer to display
     d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
     // do 3D rendering on the back buffer here
 	// copy the vertex buffer to the back buffer
-	p.run_particles(d3ddev);
+	D3DXMATRIX matTranslate;
+	D3DXMATRIX matScale;
+
+	D3DXMatrixTranslation(&matTranslate, 0, 0, 0);
+		D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
+
+		d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
     d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+	p->run_particles(d3ddev);
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -92,6 +99,7 @@ void DirectXHelper::cleanD3D(void)
 	delete camera;
 	delete input;
 	delete textbox;
+	delete p;
 }
 
 void ::DirectXHelper::init_graphics(void)
