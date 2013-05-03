@@ -1,6 +1,6 @@
 #include "Includes.h"
 #include "DirectXHelper.h"
-//#include "Particles.h"
+#include "Particles.h"
 
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -16,6 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
     WNDCLASSEX wc;
 	DirectXHelper* helper = new DirectXHelper();
     ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	Particles p;
 
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_HREDRAW | CS_VREDRAW;
@@ -50,6 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     // set up and initialize Direct3D
     helper->initD3D(hWnd, hInstance);
+	//p.intBuffers(helper->d3ddev);
     // enter the main loop:
 
     MSG msg;
@@ -66,7 +68,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
             break;
 
         helper->renderFrame();
-
+		//p.run_particles(helper->d3ddev);
 		 if(KEY_DOWN(VK_ESCAPE))
             PostMessage(hWnd, WM_DESTROY, 0, 0);
 

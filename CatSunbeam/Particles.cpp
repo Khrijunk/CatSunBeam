@@ -4,7 +4,7 @@ LPDIRECT3DVERTEXBUFFER9 t_buffer = NULL;    // the pointer to the particle's ver
 LPDIRECT3DVERTEXBUFFER9 g_buffer = NULL;    // the pointer to the grid's vertex buffer
 float camx, camy, camz;    // camera position
 // PARTICLE particle;
-static const int PARTICLECOUNT = 300;
+static const int PARTICLECOUNT = 50000;
 Particles particle[PARTICLECOUNT]; 
 
 struct CUSTOMVERTEX {FLOAT X, Y, Z; DWORD COLOR; FLOAT U, V;};
@@ -29,10 +29,10 @@ void Particles::intBuffers(LPDIRECT3DDEVICE9 d3ddev){
 
     struct CUSTOMVERTEX t_vert[] =
     {
-        {-1.0f, 1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 1, 0,},
-        {-1.0f, -1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 0, 0,},
-        {1.0f, 1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 1, 1,},
-        {1.0f, -1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 0, 1,},
+        {-.05f, .05f, 0.0f, D3DCOLOR_XRGB(255, 255, 255), 1, 0,},
+        {-0.05f, -.05f, 0.0f, D3DCOLOR_XRGB(255, 255, 255), 0, 0,},
+        {.05f, .05f, 0.0f, D3DCOLOR_XRGB(255, 255, 255), 1, 1,},
+        {.05f, -.05f, 0.0f, D3DCOLOR_XRGB(255, 255, 255), 0, 1,},
     };
 
     // create a vertex buffer interface called t_buffer
@@ -85,7 +85,7 @@ void Particles::set_particle(float camx, float camy, float camz, LPDIRECT3DDEVIC
     // f. Scaling
     static D3DXMATRIX matScale;
     D3DXMatrixIdentity(&matScale);
-    matScale._11 = matScale._22 = matScale._33 = radius;
+    matScale._11 = matScale._22 = matScale._33 = radius*.5;
 
 
     // Now build the world matrix and set it
@@ -133,13 +133,13 @@ void Particles::reset_particle()
     position.y = 0.0f;
     position.z = 0.0f;
     velocity.x = random_number(-2.0f, 2.0f);
-    velocity.y = 3.0f;
+    velocity.y = 1.0f;
     velocity.z = random_number(-2.0f, 2.0f);
     acceleration.x = 0.0f;
-    acceleration.y = random_number(15.0f, 25.0f);
+    acceleration.y = 1.0f;
     acceleration.z = 0.0f;
-    radius = 1.0f;
-    lifespan = 0.5f;
+    radius = .5f;
+    lifespan = 5.0f;
     life = 0.0f;
 
     return;
