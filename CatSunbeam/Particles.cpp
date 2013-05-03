@@ -16,7 +16,6 @@ struct GRIDVERTEX {D3DXVECTOR3 position; DWORD color;};
 LPDIRECT3DTEXTURE9 texture;
 
 // function prototypes
-void render_grid(LPDIRECT3DDEVICE9);
 void run_particles(LPDIRECT3DDEVICE9);
 float random_number(float low, float high);
 
@@ -103,7 +102,7 @@ void Particles::render_particle(LPDIRECT3DDEVICE9 d3ddev)
 
     d3ddev->SetTexture(0, texture);
 
-    d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+    d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 1);
 
     return;
 }
@@ -130,13 +129,13 @@ void Particles::reset_particle()
 {
     active = false;
     position.x = 0.0f;
-    position.y = 0.0f;
+    position.y = 4.0f;
     position.z = 0.0f;
     velocity.x = random_number(-2.0f, 2.0f);
-    velocity.y = 1.0f;
+    velocity.y = -.25f;
     velocity.z = random_number(-2.0f, 2.0f);
     acceleration.x = 0.0f;
-    acceleration.y = 1.0f;
+    acceleration.y = .05f;
     acceleration.z = 0.0f;
     radius = .5f;
     lifespan = 5.0f;
@@ -186,62 +185,7 @@ void Particles::run_particles(LPDIRECT3DDEVICE9 d3ddev)
     return;
 }
 
-// this function renders the grid
-void render_grid(LPDIRECT3DDEVICE9 d3ddev)
-{
-    static bool InitNeeded = true;
-    static int GridSize = 10;
-    static D3DXMATRIX matIdentity;
 
-    d3ddev->SetFVF(GRIDFVF);
-
-    if(InitNeeded)
-    {
-        d3ddev->CreateVertexBuffer(sizeof(GRIDVERTEX) * GridSize * 9,
-                                   0,
-                                   GRIDFVF,
-                                   D3DPOOL_MANAGED,
-                                   &g_buffer,
-                                   0);
-
-        GRIDVERTEX* pGridData = 0;
-        g_buffer->Lock(0, 0, (void**)&pGridData, 0);
-
-        int index = 0;
-        for(; index <= GridSize * 4 + 1; index++)
-        {
-            float x = (index % 2) ? GridSize : -GridSize;
-            float y = 0.0f;
-            float z = index / 2 - GridSize;
-
-            pGridData[index].position = D3DXVECTOR3(x, y, z);
-            pGridData[index].color = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f);
-        }
-
-        for(; index <= GridSize * 8 + 4; index++)
-        {
-            static int half = index;
-            float x = (index - half) / 2 - GridSize;
-            float y = 0.0f;
-            float z = (index % 2) ? -GridSize : GridSize;
-
-            pGridData[index].position = D3DXVECTOR3(x, y, z);
-            pGridData[index].color = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f);
-        }
-
-        g_buffer->Unlock();
-
-        D3DXMatrixIdentity(&matIdentity);
-        InitNeeded = false;
-    }
-
-    d3ddev->SetTransform(D3DTS_WORLD, &matIdentity);
-    d3ddev->SetStreamSource(0, g_buffer, 0, sizeof(GRIDVERTEX));
-    d3ddev->SetTexture(0, NULL);
-    d3ddev->DrawPrimitive(D3DPT_LINELIST, 0, GridSize * 4 + 2);
-
-    return;
-}
 
 // this function generates random float values
 float random_number(float low, float high)

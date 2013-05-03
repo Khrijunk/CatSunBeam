@@ -1,7 +1,7 @@
 #include "DirectXHelper.h"
-//#include "Particles.h";
+#include "Particles.h";
 
-//Particles p;
+Particles p;
 // this function initializes and prepares Direct3D for use
 void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 {
@@ -41,7 +41,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	camera = new Camera(d3ddev);
 	input = new Input(d3ddev, camera);
 	input->initDInput(hInstance, hWnd);
-	//p.intBuffers(d3ddev);
+	p.intBuffers(d3ddev);
 	//p.set_particle(camera->xPosition,camera->yPosition,camera->zPosition,d3ddev);
 	//p.active = true;
 }
@@ -68,7 +68,7 @@ void DirectXHelper::renderFrame(void)
     d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
     // do 3D rendering on the back buffer here
 	// copy the vertex buffer to the back buffer
-	//p.run_particles(d3ddev);
+	p.run_particles(d3ddev);
     d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 
     d3ddev->EndScene();    // ends the 3D scene
