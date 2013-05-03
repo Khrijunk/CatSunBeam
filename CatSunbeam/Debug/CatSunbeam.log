@@ -1,12 +1,17 @@
-﻿Build started 5/2/2013 7:29:30 PM.
+﻿Build started 5/2/2013 7:39:05 PM.
      1>Project "C:\Users\Borzen\Documents\GitHub\CatSunBeam\CatSunbeam\CatSunbeam.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt DirectXHelper.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt DirectXHelper.cpp Particles.cpp
+         Particles.cpp
+     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\particles.cpp(213): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\particles.cpp(215): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\particles.cpp(224): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\particles.cpp(226): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
          DirectXHelper.cpp
          c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
      1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\directxhelper.cpp(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\directxhelper.cpp(72): warning C4244: 'argument' : conversion from 'unsigned long' to 'float', possible loss of data
-     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\directxhelper.cpp(98): warning C4305: 'initializing' : truncation from 'D3DCOLOR' to 'float'
+     1>c:\users\borzen\documents\github\catsunbeam\catsunbeam\directxhelper.cpp(95): warning C4305: 'initializing' : truncation from 'D3DCOLOR' to 'float'
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Borzen\Documents\GitHub\CatSunBeam\Debug\CatSunbeam.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Borzen\Documents\GitHub\CatSunBeam\Debug\CatSunbeam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Borzen\Documents\GitHub\CatSunBeam\Debug\CatSunbeam.lib" /MACHINE:X86 Debug\Camera.obj
          Debug\DirectXHelper.obj
@@ -22,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.75
+Time Elapsed 00:00:01.19

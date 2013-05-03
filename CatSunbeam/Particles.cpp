@@ -27,11 +27,12 @@ Particles::Particles(){
 void Particles::intBuffers(LPDIRECT3DDEVICE9 d3ddev){
 	D3DXCreateTextureFromFile(d3ddev,"dust.png",&texture);
 
-    CUSTOMVERTEX t_vert[] =
+    struct CUSTOMVERTEX t_vert[] =
     {
-        { -3.0f, -3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
-        { 0.0f, 3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-        { 3.0f, -3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+        {-1.0f, 1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 1, 0,},
+        {-1.0f, -1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 0, 0,},
+        {1.0f, 1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 1, 1,},
+        {1.0f, -1.0f, 0.0f, D3DCOLOR_XRGB(118, 89, 55), 0, 1,},
     };
 
     // create a vertex buffer interface called t_buffer
