@@ -35,12 +35,15 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(150, 150, 150));
 	d3ddev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	
+	RECT rect;
+	SetRect(&rect, 20, 20, SCREEN_WIDTH, 128);
 	
 	camera = new Camera(d3ddev);
-	input = new Input(d3ddev, camera);
-	input->initDInput(hInstance, hWnd);
-
+	textbox = new Textbox(d3ddev, 48, rect);
+	input = new Input(d3ddev, camera, textbox);
 	
+
+	input->initDInput(hInstance, hWnd);
 }
 
 
@@ -60,7 +63,7 @@ void DirectXHelper::renderFrame(void)
 	//get input and place the camera
 	input->CheckForInput();
 	camera->SetCamera();
-	
+	textbox->Draw();
 
 	// select the vertex buffer to display
     d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
@@ -83,6 +86,7 @@ void DirectXHelper::cleanD3D(void)
 	v_buffer->Release();    // close and release the vertex buffer
 	delete camera;
 	delete input;
+	delete textbox;
 }
 
 void ::DirectXHelper::init_graphics(void)

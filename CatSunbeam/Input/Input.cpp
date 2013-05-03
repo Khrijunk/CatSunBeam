@@ -1,9 +1,12 @@
 #include "Input.h"
 
-Input::Input(LPDIRECT3DDEVICE9 device, Camera *cam)
+Input::Input(LPDIRECT3DDEVICE9 device, Camera *cam, Textbox* text)
 {
 	camera = cam;
 	d3ddev = device;
+	textbox = text;
+	helper = new Helper();
+	picker = new Picking(d3ddev);
 }
 
 Input::~Input()
@@ -11,6 +14,8 @@ Input::~Input()
 	dinkeyboard->Unacquire();
 	dinmouse->Unacquire();
 	din->Release();
+	delete helper;
+	delete picker;
 }
 
 void Input::initDInput(HINSTANCE hInstance, HWND hWnd)
@@ -31,22 +36,33 @@ void Input::initDInput(HINSTANCE hInstance, HWND hWnd)
 					  &dinmouse,
 					  NULL);
 
+
+	DIPROPDWORD dipdw;
+	dipdw.diph.dwSize = sizeof(DIPROPDWORD);
+	dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+	dipdw.diph.dwObj = 0;
+	dipdw.diph.dwHow = DIPH_DEVICE;
+	dipdw.dwData = DIPROPAXISMODE_REL; //or ABS here
+ 
+	dinmouse->SetProperty(DIPROP_AXISMODE, &dipdw.diph);
+
+	
+	dinkeyboard->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+	dinmouse->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+
 	dinkeyboard->SetDataFormat(&c_dfDIKeyboard);
 	dinmouse->SetDataFormat(&c_dfDIMouse);
-
-	dinkeyboard->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
-	dinmouse->SetCooperativeLevel(hWnd, DISCL_FOREGROUND);
 
 	dinmouse->Acquire();
 	
 	rightButtonWasDown = false;
-
-	return;
+	leftButtonWasDown = false;
 
 }
 
 void Input::CheckForInput()
 {
+	
 	//create keyboard array
 	
 	dinkeyboard->Acquire();
@@ -80,7 +96,7 @@ void Input::CheckForInput()
 			camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() - 90)));
 			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle() - 90)));
 		}
-		
+
 		//check mouse
 		if(mousestate.rgbButtons[1])
 		{
@@ -94,4 +110,32 @@ void Input::CheckForInput()
 			ShowCursor(true);
 			rightButtonWasDown = false;
 		}
+
+		if(mousestate.rgbButtons[0])
+		{
+			leftButtonWasDown = true;
+		}
+		else if(leftButtonWasDown)
+		{
+			GetCursorPos(&mousePoint);
+			//textbox->SetString("x: " + helper->toString(mousePoint.x) + " y: " + helper->toString(mousePoint.y));
+			Ray ray;
+			ray = picker->CalcPickingRay(mousePoint.x, mousePoint.y);
+			
+			BoundingSphere sphere;
+
+			sphere.center = D3DXVECTOR3(0,0,0);
+			sphere.radius = 3;
+
+			if(picker->PickingTest(&ray, &sphere))
+			{
+				textbox->SetString("You clicked the white triangle");
+			}
+			else
+				textbox->ClearString();
+			
+			
+			leftButtonWasDown = false;
+		}
+			
 }

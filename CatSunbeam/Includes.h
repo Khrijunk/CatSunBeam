@@ -6,7 +6,9 @@
 #include <windowsx.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include<dinput.h>
+#include <dinput.h>
+#include <string>
+#include <sstream>
 
 // define the screen resolution
 #define SCREEN_WIDTH GetSystemMetrics(SM_CXSCREEN)//1280
@@ -32,5 +34,22 @@ struct CUSTOMVERTEX{FLOAT X, Y, Z; D3DVECTOR NORMAL; FLOAT U, V;};
 //#define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE)
 //struct CUSTOMVERTEX {FLOAT X, Y, Z; DWORD COLOR;};
 
+using namespace std;
+
+
+//structs
+struct Ray
+{
+	D3DXVECTOR3 origin;
+	D3DXVECTOR3 direction;
+};
+
+struct BoundingSphere
+{
+	//BoundingSphere();
+
+	D3DXVECTOR3 center;
+	float radius;
+};
 
 #endif

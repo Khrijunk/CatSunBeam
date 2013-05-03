@@ -25,6 +25,15 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{0c6dccef-a45d-46fd-b511-faba6b853b5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{3d88745f-faf4-4289-a891-3e9a98f7eb30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{2a428a8f-b20c-4abf-8bac-31c29a414038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Textbox">
+      <UniqueIdentifier>{60209f01-8782-4c8e-ad9c-95b05fec7a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,6 +54,21 @@
     <ClCompile Include="Particles/Particles.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="Camera/Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Input/Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Textbox\Textbox.cpp">
+      <Filter>Textbox</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Picking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -64,6 +88,21 @@
     </ClInclude>
     <ClInclude Include="Lighting/Lighting.h">
       <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera/Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Input/Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Textbox\Textbox.h">
+      <Filter>Textbox</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Picking.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

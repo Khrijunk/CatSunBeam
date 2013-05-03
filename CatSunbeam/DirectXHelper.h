@@ -5,6 +5,7 @@
 #include "Scene/Scene.h"
 #include "Camera/Camera.h"
 #include "Input/Input.h"
+#include "Textbox/Textbox.h"
 
 class DirectXHelper
 {
@@ -23,6 +24,7 @@ private:
 
 	Camera* camera;
 	Input* input;
+	Textbox* textbox;
 
 	float newYAngle;
 	float xPosition;
