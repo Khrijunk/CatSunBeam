@@ -45,6 +45,15 @@
     <ClCompile Include="Particles/Particles.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="Camera/Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input/Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -64,6 +73,15 @@
     </ClInclude>
     <ClInclude Include="Lighting/Lighting.h">
       <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera/Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input/Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
