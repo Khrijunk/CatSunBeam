@@ -90,6 +90,16 @@
     <ClInclude Include="Scene/Scene.h" />
     <ClInclude Include="Textbox\Textbox.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="carpet.jpg" />
+    <Image Include="stucco.jpg" />
+    <Image Include="Tiny_skin.dds" />
+    <Image Include="wood.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CatSunBeam.x" />
+    <None Include="tiny.x" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
