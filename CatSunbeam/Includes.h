@@ -10,6 +10,10 @@
 #include <string>
 #include <sstream>
 
+// ALTERATIONS BY ZACK --------------
+#include <vector>
+// END ALTERATIONS BY ZACK ----------
+
 // define the screen resolution
 #define SCREEN_WIDTH GetSystemMetrics(SM_CXSCREEN)//1280
 #define SCREEN_HEIGHT GetSystemMetrics(SM_CYSCREEN)//720

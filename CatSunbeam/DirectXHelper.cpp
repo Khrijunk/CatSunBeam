@@ -55,7 +55,6 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 // this is the function used to render a single frame
 void DirectXHelper::renderFrame(void)
 {
-	
     // clear the window to a deep blue
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 115, 255), 1.0f, 0);
 	//d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
@@ -84,6 +83,10 @@ void DirectXHelper::renderFrame(void)
     d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 	p->run_particles(d3ddev);
 
+    // ADDED BY ZACK
+    mesh->Render();
+    // END ADDED BY ZACK
+
     d3ddev->EndScene();    // ends the 3D scene
 
     d3ddev->Present(NULL, NULL, NULL, NULL);   // displays the created frame on the screen
@@ -104,6 +107,10 @@ void DirectXHelper::cleanD3D(void)
 
 void ::DirectXHelper::init_graphics(void)
 {
+    // ADDED BY ZACK
+    mesh = new Model(d3d, d3ddev, "tiny.x");
+    // END ADDED BY ZACK
+
     // create the vertices using the CUSTOMVERTEX struct
     CUSTOMVERTEX vertices[] =
     {
