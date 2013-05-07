@@ -1,5 +1,11 @@
 #include "Helper.h"
 
+Helper::Helper()
+{
+	timer = 0;
+	lastCount = GetTickCount();
+}
+
 //useful functions
 string Helper::toString(float num)
 {
@@ -7,4 +13,18 @@ string Helper::toString(float num)
 	sstream.str("");
 	sstream << num;
 	return sstream.str();
+}
+
+void Helper::IncreaseTimer()
+{
+	if(lastCount != GetTickCount())
+	{
+		lastCount = GetTickCount();
+		timer++;		
+	}
+}
+
+long Helper::GetTime()
+{
+	return timer;
 }

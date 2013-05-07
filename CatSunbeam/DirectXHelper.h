@@ -35,6 +35,7 @@ private:
 	Input* input;
 	Textbox* textbox;
 	Particles* p;
+	Helper* helper;
 
 	float newYAngle;
 	float xPosition;

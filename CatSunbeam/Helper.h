@@ -6,7 +6,13 @@
 class Helper
 {
 public:
+	Helper();
 	string toString(float);
+	void IncreaseTimer();
+	long GetTime();
+private:
+		unsigned long timer;
+		unsigned long lastCount;
 };
 
 #endif

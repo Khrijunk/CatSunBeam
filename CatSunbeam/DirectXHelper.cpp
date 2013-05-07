@@ -42,6 +42,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	textbox = new Textbox(d3ddev, 48, rect);
 	input = new Input(d3ddev, camera, textbox);
 	p = new Particles();
+	helper = new Helper();
 	
 	input->initDInput(hInstance, hWnd);
 	
@@ -64,6 +65,8 @@ void DirectXHelper::renderFrame(void)
 	// select which vertex format we are using
 	d3ddev->SetFVF(CUSTOMFVF);
 
+	helper->IncreaseTimer();
+	textbox->SetString(helper->toString(helper->GetTime()));
 	//get input and place the camera
 	input->CheckForInput();
 	camera->SetCamera();
@@ -77,14 +80,14 @@ void DirectXHelper::renderFrame(void)
 	D3DXMATRIX matScale;
 
 	D3DXMatrixTranslation(&matTranslate, 0, 0, 0);
-		D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
+	D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
 
-		d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
+	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
     d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 	p->run_particles(d3ddev);
 
     // ADDED BY ZACK
-    mesh->Render();
+    //mesh->Render();
     // END ADDED BY ZACK
 
     d3ddev->EndScene();    // ends the 3D scene
@@ -108,7 +111,7 @@ void DirectXHelper::cleanD3D(void)
 void ::DirectXHelper::init_graphics(void)
 {
     // ADDED BY ZACK
-    mesh = new Model(d3d, d3ddev, "tiny.x");
+    //mesh = new Model(d3d, d3ddev, "tiny.x");
     // END ADDED BY ZACK
 
     // create the vertices using the CUSTOMVERTEX struct
