@@ -16,6 +16,7 @@ class Model
     ID3DXMesh *_mesh;
     std::vector<D3DMATERIAL9*> _materials;
     std::vector<IDirect3DTexture9*> _textures;
+	ID3DXBuffer* materialBuffer; // material buffer
 };
 
 #endif

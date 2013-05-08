@@ -22,15 +22,15 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	//uncomment this to see the movement at work
 	init_graphics();
 
-	d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE);    // turn off the 3D lighting
+	d3ddev->SetRenderState(D3DRS_LIGHTING, TRUE);    // turn off the 3D lighting
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(150, 150, 150));
+	//d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(150, 150, 150));
 	d3ddev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	
 	RECT rect;
 	SetRect(&rect, 20, 20, SCREEN_WIDTH, 128);
 	
-	camera = new Camera(d3ddev);
+	camera = new CCamera();
 	textbox = new Textbox(d3ddev, 48, rect);
 	input = new Input(d3ddev, camera, textbox);
 	p = new Particles();
@@ -60,21 +60,24 @@ void DirectXHelper::renderFrame(void)
 	textbox->SetString(helper->toString(helper->GetTime()));
 	//get input and place the camera
 	input->CheckForInput();
-	camera->SetCamera();
+	camera->Update();
+	d3ddev->SetTransform(D3DTS_VIEW, camera->GetViewMatrix());
+	d3ddev->SetTransform(D3DTS_PROJECTION, camera->GetProjectionMatrix());
+
 	textbox->Draw();
 	
 	// select the vertex buffer to display
     d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
     // do 3D rendering on the back buffer here
 	// copy the vertex buffer to the back buffer
-	D3DXMATRIX matTranslate;
-	D3DXMATRIX matScale;
+	//D3DXMATRIX matTranslate;
+	//D3DXMATRIX matScale;
 
-	D3DXMatrixTranslation(&matTranslate, 0, 0, 0);
-	D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
+	//D3DXMatrixTranslation(&matTranslate, 0, 0, 0);
+	//D3DXMatrixScaling(&matScale, 0.5f, 0.5f, 0.5f);
 
-	d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
-    d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+	//d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
+    //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 	p->run_particles(d3ddev);
 
     // ADDED BY ZACK
@@ -92,7 +95,7 @@ void DirectXHelper::cleanD3D(void)
 {
     d3ddev->Release(); // close and release the 3D device
     d3d->Release(); // close and release Direct3D
-	v_buffer->Release();    // close and release the vertex buffer
+	//v_buffer->Release();    // close and release the vertex buffer
 	delete camera;
 	delete input;
 	delete textbox;
@@ -101,16 +104,33 @@ void DirectXHelper::cleanD3D(void)
 
 void ::DirectXHelper::init_graphics(void)
 {
+
     // ADDED BY ZACK
     mesh = new Model(d3d, d3ddev, "CatSunBeam16.x");
     // END ADDED BY ZACK
 
     // create a vertex buffer interface called v_buffer
-    d3ddev->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX), 0, CUSTOMFVF, D3DPOOL_MANAGED, &v_buffer, NULL);
+    /*d3ddev->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX), 0, CUSTOMFVF, D3DPOOL_MANAGED, &v_buffer, NULL);
 
     VOID* pVoid;    // a void pointer
 
     // lock v_buffer and load the vertices into it
     v_buffer->Lock(0, 0, (void**)&pVoid, 0);
     v_buffer->Unlock();
+	*/
+	D3DLIGHT9 light;
+	ZeroMemory(&light, sizeof(light));
+	light.Type = D3DLIGHT_SPOT;
+	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
+	light.Position = D3DXVECTOR3(-1.5f, 10.0f, -15.0f);
+	light.Direction = D3DXVECTOR3(0.0f, 1.0f, -4.0f);
+	light.Range = 50.0f;
+	light.Falloff = 1.0f;
+	light.Theta = 45.0f;
+	light.Phi = 45.0f;
+
+	d3ddev->SetLight(0, &light);
+	d3ddev->LightEnable(0, true);
 }

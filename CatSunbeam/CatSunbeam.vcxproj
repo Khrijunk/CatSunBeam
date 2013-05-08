@@ -97,6 +97,7 @@
     <Image Include="stucco.png" />
     <Image Include="Tiny_skin.dds" />
     <Image Include="wood.png" />
+    <Image Include="wood2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cat.x" />

@@ -10,7 +10,7 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
   //_textures = 0;
   HRESULT result = 0; // successful load check
   ID3DXBuffer* adjBuffer = 0;
-  ID3DXBuffer* materialBuffer = 0; // material buffer
+  materialBuffer = 0; // material buffer
   DWORD materialCount = 0; // number of materials
 
   // Attempt to load the model file onto video memory
@@ -26,7 +26,8 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
     for (int i = 0; i < (int)materialCount; i++)
     {
       // MatD3D.Ambient is not initialized when loaded, initializing it now
-      materials[i].MatD3D.Ambient = materials[i].MatD3D.Diffuse;
+      materials[i].MatD3D.Ambient = materials[i].MatD3D.Specular = materials[i].MatD3D.Diffuse;
+	  materials[i].MatD3D.Power = 5;
 
       // saving the ith material to memory
       _materials.push_back(&materials[i].MatD3D);
@@ -47,9 +48,6 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
       }
     }
   }
-
-  // we extracted the materials and textures to memory, delete the material buffer
-  materialBuffer->Release();
 }
 
 bool Model::Render(float deltaTime)
@@ -97,4 +95,5 @@ Model::~Model()
   _materials.~vector();
   _textures.~vector();
   _mesh->Release();
+  materialBuffer->Release();
 }

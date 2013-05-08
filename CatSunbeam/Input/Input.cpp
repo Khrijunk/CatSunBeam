@@ -1,12 +1,14 @@
 #include "Input.h"
 
-Input::Input(LPDIRECT3DDEVICE9 device, Camera *cam, Textbox* text)
+Input::Input(LPDIRECT3DDEVICE9 device, CCamera *cam, Textbox* text)
 {
 	camera = cam;
 	d3ddev = device;
 	textbox = text;
 	helper = new Helper();
 	picker = new Picking(d3ddev);
+
+	cameraSpeed = 20.0f;
 }
 
 Input::~Input()
@@ -72,33 +74,36 @@ void Input::CheckForInput()
 	
 	dinmouse->Acquire();
 	dinmouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mousestate);
-
-    //ZACK CHANGED!!!!!
+	
 	if(keystate[DIK_W]&0x80)
 		{
-			camera->AddToXPos(sin(D3DXToRadian(camera->GetAngle())));
-			camera->AddToZPos(cos(D3DXToRadian(camera->GetAngle())));
+			camera->MoveForward(cameraSpeed * .2);
+			//camera->AddToZPos(1);//sin(D3DXToRadian(camera->GetAngle())));
+			//camera->AddToZPos(cos(D3DXToRadian(camera->GetAngle())));
 		}
 
 		if(keystate[DIK_S]&0x80)
 		{
-			camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle())));
-			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle())));
+			camera->MoveForward(-cameraSpeed * .2);
+			//camera->AddToZPos(-1);//-sin(D3DXToRadian(camera->GetAngle())));
+			//camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle())));
 		}
 
 		if(keystate[DIK_A]&0x80)
 		{
-			camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() + 90)));
-			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle() + 90)));
+			camera->Strafe(-cameraSpeed * .2);
+			//camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() + 90)));
+			//camera->AddToZPos(-1);//cos(D3DXToRadian(camera->GetAngle() + 90)));
 		}
 
         if(keystate[DIK_D]&0x80)
 		{
-			camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() - 90)));
-			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle() - 90)));
+			camera->Strafe(cameraSpeed * .2);
+			//camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() - 90)));
+			//camera->AddToZPos(1);//-cos(D3DXToRadian(camera->GetAngle() - 90)));
 		}
 
-        if(keystate[DIK_E]&0x80)
+        /*if(keystate[DIK_E]&0x80)
 		{
 			camera->AddToZPos(-sin(D3DXToRadian(camera->GetAngle() + 90)));
 			camera->AddToYPos(-cos(D3DXToRadian(camera->GetAngle() + 90)));
@@ -108,7 +113,7 @@ void Input::CheckForInput()
 		{
 			camera->AddToZPos(sin(D3DXToRadian(camera->GetAngle() + 90)));
 			camera->AddToYPos(cos(D3DXToRadian(camera->GetAngle() + 90)));
-		}
+		}*/
         //END OF ZACK'S CHANGES
 
 		//check mouse
@@ -116,7 +121,9 @@ void Input::CheckForInput()
 		{
 			if(!rightButtonWasDown)
 				ShowCursor(false);
-			camera->ChangeDirection(mousestate);
+			//camera->ChangeDirection(mousestate);
+			camera->Yaw( mousestate.lX * .01 * 1.8f);
+			camera->Pitch( mousestate.lY * .01 * 1.8f );
 			rightButtonWasDown = true;
 		}
 		else if(rightButtonWasDown)
