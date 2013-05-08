@@ -102,7 +102,7 @@ void DirectXHelper::cleanD3D(void)
 void ::DirectXHelper::init_graphics(void)
 {
     // ADDED BY ZACK
-    mesh = new Model(d3d, d3ddev, "CatSunBeam13.x");
+    mesh = new Model(d3d, d3ddev, "CatSunBeam16.x");
     // END ADDED BY ZACK
 
     // create a vertex buffer interface called v_buffer
