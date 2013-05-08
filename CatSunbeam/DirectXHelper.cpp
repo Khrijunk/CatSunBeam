@@ -81,7 +81,8 @@ void DirectXHelper::renderFrame(void)
 	p->run_particles(d3ddev);
 
     // ADDED BY ZACK
-    mesh->Render(helper->GetTime());
+    mesh->Render(helper->GetTime(), 0);
+    cat->Render(helper->GetTime(), 1);
     // END ADDED BY ZACK
 
     d3ddev->EndScene();    // ends the 3D scene
@@ -107,6 +108,7 @@ void ::DirectXHelper::init_graphics(void)
 
     // ADDED BY ZACK
     mesh = new Model(d3d, d3ddev, "CatSunBeam16.x");
+    cat = new Model(d3d, d3ddev, "cat.x");
     // END ADDED BY ZACK
 
     // create a vertex buffer interface called v_buffer

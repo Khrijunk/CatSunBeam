@@ -50,21 +50,34 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
   }
 }
 
-bool Model::Render(float deltaTime)
+bool Model::Render(float deltaTime, int modelReference)
 {
   if (_d3ddev)
   {
 
     // update before render
-    static float y = 0.0f;
-    D3DXMATRIX scaling;
-    D3DXMATRIX yRotation;
-    D3DXMatrixRotationY(&yRotation, y);
+    //static float y = 0.0f;
+    //D3DXMATRIX scaling;
+    //D3DXMATRIX yRotation;
+    //D3DXMatrixRotationY(&yRotation, y);
     //D3DXMatrixScaling(&scaling, .05f, .05f, .05f);
-    D3DXMatrixScaling(&scaling, 5.0f, 5.0f, 5.0f);
-    y += deltaTime;
-    if (y < 6.28f) { y = 0.0f; }
-    D3DMATRIX world = scaling;
+    //D3DXMatrixScaling(&scaling, 5.0f, 5.0f, 5.0f);
+    //y += deltaTime;
+    //if (y < 6.28f) { y = 0.0f; }
+    //D3DMATRIX world = scaling;
+    D3DMATRIX world;
+    if (modelReference == 1)
+    {
+      D3DXMATRIX yRotation;
+      D3DXMatrixRotationX(&yRotation, -1.57f);
+      world = yRotation;
+    }
+    else
+    {
+      D3DXMATRIX scaling;
+      D3DXMatrixScaling(&scaling, 5.0f, 5.0f, 5.0f);
+      world = scaling;
+    }
     _d3ddev->SetTransform(D3DTS_WORLD, &world);
     // render
     for (int i = 0; i < (int)_materials.size(); i++)

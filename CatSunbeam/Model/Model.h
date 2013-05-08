@@ -7,7 +7,7 @@ class Model
 {
   public:
     Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath);
-    bool Render(float deltaTime);
+    bool Render(float deltaTime, int modelReference);
     void CalculateNormals();
     ~Model();
   private:
