@@ -68,15 +68,17 @@ bool Model::Render(float deltaTime, int modelReference)
     D3DMATRIX world;
     if (modelReference == 1)
     {
-      D3DXMATRIX yRotation;
-      D3DXMatrixRotationX(&yRotation, -1.57f);
-      world = yRotation;
+
+      D3DXMATRIX transform;
+      //D3DXMatrixRotationZ(&transform, -1.57f);
+      D3DXMatrixIdentity(&transform);
+      world = transform;
     }
     else
     {
-      D3DXMATRIX scaling;
-      D3DXMatrixScaling(&scaling, 5.0f, 5.0f, 5.0f);
-      world = scaling;
+      D3DXMATRIX transform;
+      D3DXMatrixScaling(&transform, 5.0f, 5.0f, 5.0f);
+      world = transform;
     }
     _d3ddev->SetTransform(D3DTS_WORLD, &world);
     // render

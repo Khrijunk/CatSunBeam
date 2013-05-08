@@ -24,7 +24,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 
 	d3ddev->SetRenderState(D3DRS_LIGHTING, TRUE);    // turn off the 3D lighting
 	d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	//d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(150, 150, 150));
+	d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(100, 100, 100));
 	d3ddev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	
 	RECT rect;
@@ -108,7 +108,7 @@ void ::DirectXHelper::init_graphics(void)
 
     // ADDED BY ZACK
     mesh = new Model(d3d, d3ddev, "CatSunBeam16.x");
-    cat = new Model(d3d, d3ddev, "cat.x");
+    cat = new Model(d3d, d3ddev, "cat2.x");
     // END ADDED BY ZACK
 
     // create a vertex buffer interface called v_buffer
