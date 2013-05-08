@@ -20,7 +20,7 @@ void Camera::SetCamera()
 {
 	D3DXMATRIX	 matView;
 
-	D3DXMatrixLookAtLH(&matView,
+   D3DXMatrixLookAtLH(&matView,
 						&D3DXVECTOR3(xPosition, yPosition, zPosition),
 						&D3DXVECTOR3(xDirection, yDirection, zDirection),
 						&D3DXVECTOR3(0.0f, 1.0f, 0.0f));
@@ -29,35 +29,16 @@ void Camera::SetCamera()
 
 	D3DXMATRIX matProjection;
 
-	D3DXMatrixPerspectiveFovLH(&matProjection,
-								D3DXToRadian(45),
-								(FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT,
-								1.0f,
-								100.0f);
+	D3DXMatrixPerspectiveFovLH(&matProjection, D3DXToRadian(45), (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT, 1.0f, 100.0f);
 								   
 	d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
-
 }
 
-void Camera::AddToXPos(float amount)
-{
-	xPosition += amount;
-}
+void Camera::AddToXPos(float amount) { xPosition += amount; }
+void Camera::AddToYPos(float amount) { yPosition += amount; }
+void Camera::AddToZPos(float amount) { zPosition += amount; }
 
-void Camera::AddToYPos(float amount)
-{
-	yPosition += amount;
-}
-
-void Camera::AddToZPos(float amount)
-{
-	zPosition += amount;
-}
-
-float Camera::GetAngle()
-{
-	return angle;
-}
+float Camera::GetAngle() { return angle; }
 
 void Camera::ChangeDirection(DIMOUSESTATE mousestate)
 {

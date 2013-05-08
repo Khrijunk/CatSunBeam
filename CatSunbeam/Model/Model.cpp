@@ -62,23 +62,20 @@ bool Model::Render(float deltaTime)
     D3DXMATRIX scaling;
     D3DXMATRIX yRotation;
     D3DXMatrixRotationY(&yRotation, y);
-    D3DXMatrixScaling(&scaling, .050f, .050f, .050f);
+    //D3DXMatrixScaling(&scaling, .05f, .05f, .05f);
+    D3DXMatrixScaling(&scaling, 5.0f, 5.0f, 5.0f);
     y += deltaTime;
     if (y < 6.28f) { y = 0.0f; }
     D3DMATRIX world = scaling;
     _d3ddev->SetTransform(D3DTS_WORLD, &world);
     // render
-    //_d3ddev->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xffffffff, 1.0f, 0);
-    //_d3ddev->BeginScene();
     for (int i = 0; i < (int)_materials.size(); i++)
     {
       _d3ddev->SetMaterial(_materials[i]);
       _d3ddev->SetTexture(0, _textures[i]);
       _mesh->DrawSubset(i);
     }
-    //_d3ddev->EndScene();
-    //_d3ddev->Present(0, 0, 0, 0);
-    //CalculateNormals();
+    CalculateNormals();
   }
   return true;
 }

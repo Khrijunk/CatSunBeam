@@ -106,24 +106,30 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="carpet.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="stucco.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="wood.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Tiny_skin.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="carpet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="catTexture.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="stucco.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wood.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CatSunBeam.x">
+    <None Include="tiny.x">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="tiny.x">
+    <None Include="cat.x">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="CatSunBeam13.x">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -91,13 +91,15 @@
     <ClInclude Include="Textbox\Textbox.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="carpet.jpg" />
-    <Image Include="stucco.jpg" />
+    <Image Include="carpet.png" />
+    <Image Include="catTexture.png" />
+    <Image Include="stucco.png" />
     <Image Include="Tiny_skin.dds" />
-    <Image Include="wood.jpg" />
+    <Image Include="wood.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CatSunBeam.x" />
+    <None Include="cat.x" />
+    <None Include="CatSunBeam13.x" />
     <None Include="tiny.x" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

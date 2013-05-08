@@ -4,26 +4,18 @@
 void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 {
     d3d = Direct3DCreate9(D3D_SDK_VERSION); // create the Direct3D interface
-
     D3DPRESENT_PARAMETERS d3dpp; // create a struct to hold various device information
-
     ZeroMemory(&d3dpp, sizeof(d3dpp));    // clear out the struct for use
 	d3dpp.Windowed = !FULLSCREEN;    // program fullscreen, not windowed
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;    // discard old frames
     d3dpp.hDeviceWindow = hWnd;    // set the window to be used by Direct3D
-//#if FULLSCREEN
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
     d3dpp.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
     d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
-//#endif
-
+    d3dpp.EnableAutoDepthStencil = true;
+    d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     // create a device class using this information and the info from the d3dpp stuct
-    d3d->CreateDevice(D3DADAPTER_DEFAULT,
-                      D3DDEVTYPE_HAL,
-                      hWnd,
-                      D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-                      &d3dpp,
-                      &d3ddev);
+    d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &d3ddev);
 
 	v_buffer = NULL;
 	
@@ -43,7 +35,6 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	input = new Input(d3ddev, camera, textbox);
 	p = new Particles();
 	helper = new Helper();
-	
 	input->initDInput(hInstance, hWnd);
 	
 	//p->initBuffer(v_buffer);
@@ -57,7 +48,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 void DirectXHelper::renderFrame(void)
 {
     // clear the window to a deep blue
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 115, 255), 1.0f, 0);
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 115, 255), 100.0f, 0);
 	//d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     d3ddev->BeginScene();    // begins the 3D scene
@@ -87,7 +78,7 @@ void DirectXHelper::renderFrame(void)
 	p->run_particles(d3ddev);
 
     // ADDED BY ZACK
-    //mesh->Render();
+    mesh->Render(helper->GetTime());
     // END ADDED BY ZACK
 
     d3ddev->EndScene();    // ends the 3D scene
@@ -111,36 +102,15 @@ void DirectXHelper::cleanD3D(void)
 void ::DirectXHelper::init_graphics(void)
 {
     // ADDED BY ZACK
-    //mesh = new Model(d3d, d3ddev, "tiny.x");
+    mesh = new Model(d3d, d3ddev, "CatSunBeam13.x");
     // END ADDED BY ZACK
 
-    // create the vertices using the CUSTOMVERTEX struct
-    CUSTOMVERTEX vertices[] =
-    {
-        { -3.0f, -3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
-        { 0.0f, 3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-        { 3.0f, -3.0f, 0.0f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
-    };
-
-	/*CUSTOMVERTEX vertices[] = 
-    {
-		{-3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0),},
-        { 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
-        { 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
-    };*/
-
     // create a vertex buffer interface called v_buffer
-    d3ddev->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX),
-                               0,
-                               CUSTOMFVF,
-                               D3DPOOL_MANAGED,
-                               &v_buffer,
-                               NULL);
+    d3ddev->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX), 0, CUSTOMFVF, D3DPOOL_MANAGED, &v_buffer, NULL);
 
     VOID* pVoid;    // a void pointer
 
     // lock v_buffer and load the vertices into it
     v_buffer->Lock(0, 0, (void**)&pVoid, 0);
-    memcpy(pVoid, vertices, sizeof(vertices));
     v_buffer->Unlock();
 }

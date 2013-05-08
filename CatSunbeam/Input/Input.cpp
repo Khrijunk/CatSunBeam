@@ -73,6 +73,7 @@ void Input::CheckForInput()
 	dinmouse->Acquire();
 	dinmouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mousestate);
 
+    //ZACK CHANGED!!!!!
 	if(keystate[DIK_W]&0x80)
 		{
 			camera->AddToXPos(sin(D3DXToRadian(camera->GetAngle())));
@@ -91,11 +92,24 @@ void Input::CheckForInput()
 			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle() + 90)));
 		}
 
-		if(keystate[DIK_D]&0x80)
+        if(keystate[DIK_D]&0x80)
 		{
 			camera->AddToXPos(-sin(D3DXToRadian(camera->GetAngle() - 90)));
 			camera->AddToZPos(-cos(D3DXToRadian(camera->GetAngle() - 90)));
 		}
+
+        if(keystate[DIK_E]&0x80)
+		{
+			camera->AddToZPos(-sin(D3DXToRadian(camera->GetAngle() + 90)));
+			camera->AddToYPos(-cos(D3DXToRadian(camera->GetAngle() + 90)));
+		}
+
+        if(keystate[DIK_Q]&0x80)
+		{
+			camera->AddToZPos(sin(D3DXToRadian(camera->GetAngle() + 90)));
+			camera->AddToYPos(cos(D3DXToRadian(camera->GetAngle() + 90)));
+		}
+        //END OF ZACK'S CHANGES
 
 		//check mouse
 		if(mousestate.rgbButtons[1])
