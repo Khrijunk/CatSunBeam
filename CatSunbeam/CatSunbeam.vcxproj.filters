@@ -153,5 +153,8 @@
     <None Include="siamesweCatAnimated.x">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="floorsubdiv.x">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

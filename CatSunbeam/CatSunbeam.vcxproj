@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="floor.x" />
+    <None Include="floorsubdiv.x" />
     <None Include="room.x" />
     <None Include="siamesweCatAnimated.x" />
     <None Include="tiny.x" />
