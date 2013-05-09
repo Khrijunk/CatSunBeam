@@ -84,7 +84,8 @@ void DirectXHelper::renderFrame(void)
     room->Render(helper->GetTime(), 0);
     window->Render(helper->GetTime(), 0);
     floor->Render(helper->GetTime(), 0);
-    cat->Render(helper->GetTime(), 1);
+    //cat->Render(helper->GetTime(), 1);
+    cat2->Render(helper->GetTime(), 1);
     // END ADDED BY ZACK
 
     d3ddev->EndScene();    // ends the 3D scene
@@ -112,7 +113,8 @@ void ::DirectXHelper::init_graphics(void)
     floor = new Model(d3d, d3ddev, "floor.x");
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
-    cat = new Model(d3d, d3ddev, "cat2.x");
+    //cat = new Model(d3d, d3ddev, "cat2.x");
+    cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated.x");
     // END ADDED BY ZACK
 
     // create a vertex buffer interface called v_buffer

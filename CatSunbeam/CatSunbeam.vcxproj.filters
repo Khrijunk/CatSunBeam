@@ -69,6 +69,9 @@
     <ClCompile Include="Picking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedModel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -103,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="Picking.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshAllocation.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModel.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="floor.x">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="siamesweCatAnimated.x">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

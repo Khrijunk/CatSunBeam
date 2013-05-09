@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedModel.cpp" />
     <ClCompile Include="Camera/Camera.cpp" />
     <ClCompile Include="DirectXHelper.cpp" />
     <ClCompile Include="Helper.cpp" />
@@ -78,8 +79,10 @@
     <ClCompile Include="Textbox\Textbox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedModel.h" />
     <ClInclude Include="Camera/Camera.h" />
     <ClInclude Include="DirectXHelper.h" />
+    <ClInclude Include="MeshAllocation.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input/Input.h" />
@@ -102,6 +105,7 @@
   <ItemGroup>
     <None Include="floor.x" />
     <None Include="room.x" />
+    <None Include="siamesweCatAnimated.x" />
     <None Include="tiny.x" />
     <None Include="window.x" />
   </ItemGroup>

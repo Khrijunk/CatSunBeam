@@ -10,6 +10,7 @@
 
 //ADDED BY ZACK
 #include "Model/Model.h"
+#include "AnimatedModel.h"
 // END ADDED BY ZACK
 
 class DirectXHelper
@@ -32,6 +33,7 @@ private:
     Model *window;
     Model *floor;
     Model *cat;
+    AnimatedModel *cat2;
     // END ADDITIONS BY ZACK
 
 	CCamera* camera;
