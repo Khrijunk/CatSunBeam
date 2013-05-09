@@ -137,13 +137,20 @@ void DirectXHelper::renderFrame(void)
 
     window->Render(helper->GetTime(), 0);
 	d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	room->Render(helper->GetTime(), 0);
 	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, true );
-	stencil->RenderReflection(cat, floor, helper);
-    cat->Render(helper->GetTime(), 1);
 	floor->Render(helper->GetTime(), 0);
 	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, false );
 
-	room->Render(helper->GetTime(), 0);
+	stencil->RenderShadow(cat2, D3DXVECTOR3(0, -1, 0), lightDir, helper);
+
+	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, true );
+    cat2->Render(helper->GetTime(), 1);
+	stencil->RenderReflection(cat2, floor, helper);
+	
+	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, false );
+
+	
     // END ADDED BY ZACK
 
 	
@@ -174,8 +181,8 @@ void ::DirectXHelper::init_graphics(void)
     floor = new Model(d3d, d3ddev, "floor.x");
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
-	
-    cat = new Model(d3d, d3ddev, "cat2.x");
+	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated.x");
+    //cat = new Model(d3d, d3ddev, "cat2.x");
 	
     // END ADDED BY ZACK
 
@@ -238,13 +245,15 @@ void ::DirectXHelper::init_graphics(void)
 	// Load Textures.  I created a global array just to keep things simple.  The order of the images
 	// is VERY important.  The reason is the skybox mesh (g_SkyboxMesh[]) array was created above
 	// in this order. (ie. front, back, left, etc.)
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Front.png") , &skyTextures[0] );
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Back.png")  , &skyTextures[1] );
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Left.png")  , &skyTextures[2] );
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Right.png") , &skyTextures[3] );
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Top.png")   , &skyTextures[4] );
-    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Bottom.jpg"), &skyTextures[5] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Front.png") , &skyTextures[0] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Back.png")  , &skyTextures[1] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Left.png")  , &skyTextures[2] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Right.png") , &skyTextures[3] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Top.png")   , &skyTextures[4] );
+    D3DXCreateTextureFromFile( d3ddev, ("Images/SkyBox_Bottom.jpg"), &skyTextures[5] );
 	
+	lightDir  =D3DXVECTOR3(0.0f, -14.0f, 5.0f);
+
 	D3DLIGHT9 light;
 	ZeroMemory(&light, sizeof(light));
 	light.Type = D3DLIGHT_SPOT;
@@ -252,7 +261,7 @@ void ::DirectXHelper::init_graphics(void)
 	light.Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
 	light.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	light.Position = D3DXVECTOR3(0.0f, 14.0f, -5.0f);
-	light.Direction = D3DXVECTOR3(0.0f, -14.0f, 5.0f);
+	light.Direction = lightDir;
 	light.Range = 40.0f;
 	light.Falloff = 1.0f;
 	light.Theta = 10.0f;

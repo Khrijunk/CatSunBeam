@@ -34,6 +34,12 @@
     <Filter Include="Textbox">
       <UniqueIdentifier>{60209f01-8782-4c8e-ad9c-95b05fec7a83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{805c881b-cd09-46de-8573-eae927d27f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stencil">
+      <UniqueIdentifier>{e1965168-b02a-4148-9ab6-c8d3a8960496}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="AnimatedModel.cpp">
       <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Stencil\Stencil.cpp">
+      <Filter>Stencil</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +122,9 @@
     <ClInclude Include="AnimatedModel.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Stencil\Stencil.h">
+      <Filter>Stencil</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Tiny_skin.dds">
@@ -135,6 +147,24 @@
     </Image>
     <Image Include="wood2.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Back.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Bottom.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Front.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Left.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Right.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\SkyBox_Top.jpg">
+      <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

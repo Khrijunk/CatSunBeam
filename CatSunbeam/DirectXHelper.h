@@ -6,7 +6,7 @@
 #include "Camera/Camera.h"
 #include "Input/Input.h"
 #include "Textbox/Textbox.h"
-#include "Particles/Particles.h";
+#include "Particles/Particles.h"
 #include "Stencil/Stencil.h"
 
 //ADDED BY ZACK

@@ -76,6 +76,7 @@
     <ClCompile Include="Particles/Particles.cpp" />
     <ClCompile Include="Picking.cpp" />
     <ClCompile Include="Scene/Scene.cpp" />
+    <ClCompile Include="Stencil\Stencil.cpp" />
     <ClCompile Include="Textbox\Textbox.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,12 +92,19 @@
     <ClInclude Include="Particles/Particles.h" />
     <ClInclude Include="Picking.h" />
     <ClInclude Include="Scene/Scene.h" />
+    <ClInclude Include="Stencil\Stencil.h" />
     <ClInclude Include="Textbox\Textbox.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cage.png" />
     <Image Include="carpet.png" />
     <Image Include="catTexture.png" />
+    <Image Include="Images\SkyBox_Back.jpg" />
+    <Image Include="Images\SkyBox_Bottom.jpg" />
+    <Image Include="Images\SkyBox_Front.jpg" />
+    <Image Include="Images\SkyBox_Left.jpg" />
+    <Image Include="Images\SkyBox_Right.jpg" />
+    <Image Include="Images\SkyBox_Top.jpg" />
     <Image Include="stucco.png" />
     <Image Include="Tiny_skin.dds" />
     <Image Include="wood.png" />
