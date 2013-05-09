@@ -1,3 +1,7 @@
+/*****************************************************************************
+Tutorial for skybox code: http://www.gameengineer.net/samples-graphics.html
+******************************************************************************/
+
 #include "DirectXHelper.h"
 
 // this function initializes and prepares Direct3D for use
@@ -9,10 +13,12 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	d3dpp.Windowed = !FULLSCREEN;    // program fullscreen, not windowed
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;    // discard old frames
     d3dpp.hDeviceWindow = hWnd;    // set the window to be used by Direct3D
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+	//d3dpp.BackBufferFormat = D3DFMT_D24S8;    // set the back buffer format to 32-bit
     d3dpp.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
     d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
-    d3dpp.EnableAutoDepthStencil = true;
+    //d3dpp.EnableAutoDepthStencil = true;
+	 d3dpp.EnableAutoDepthStencil = true;
     d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     // create a device class using this information and the info from the d3dpp stuct
     d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &d3ddev);
@@ -28,17 +34,19 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	d3ddev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	
 	RECT rect;
-	SetRect(&rect, 20, 20, SCREEN_WIDTH, 128);
+	SetRect(&rect, 20, 20, SCREEN_WIDTH, 256);
 	
 	camera = new CCamera();
-	textbox = new Textbox(d3ddev, 48, rect);
+	textbox = new Textbox(d3ddev, 16, rect);
 	input = new Input(d3ddev, camera, textbox);
+	stencil = new Stencil(d3ddev);
 	p = new Particles();
 	helper = new Helper();
 	input->initDInput(hInstance, hWnd);
+
 	
 	//p->initBuffer(v_buffer);
-	p->intBuffers(d3ddev);
+	//p->intBuffers(d3ddev);
 	//p.set_particle(camera->xPosition,camera->yPosition,camera->zPosition,d3ddev);
 	//p.active = true;
 }
@@ -47,9 +55,11 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 // this is the function used to render a single frame
 void DirectXHelper::renderFrame(void)
 {
+	D3DXMATRIX matWorld;
     // clear the window to a deep blue
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 115, 255), 100.0f, 0);
-	//d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 115, 255), 100.0f, 0);
+	//d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 100.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     d3ddev->BeginScene();    // begins the 3D scene
 
@@ -57,7 +67,7 @@ void DirectXHelper::renderFrame(void)
 	d3ddev->SetFVF(CUSTOMFVF);
 
 	helper->IncreaseTimer();
-	textbox->SetString(helper->toString(helper->GetTime()));
+	//textbox->SetString(helper->toString(helper->GetTime()));
 	//get input and place the camera
 	input->CheckForInput();
 	camera->Update();
@@ -78,15 +88,65 @@ void DirectXHelper::renderFrame(void)
 
 	//d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
     //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
-	p->run_particles(d3ddev);
+	//p->run_particles(d3ddev);
+
+	d3ddev->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );
+    d3ddev->SetRenderState( D3DRS_ZWRITEENABLE, false );
+	d3ddev->SetRenderState( D3DRS_LIGHTING, false );
+
+	// Render the sky box
+    d3ddev->SetFVF( CUSTOMFVFNONORMAL );
+    d3ddev->SetStreamSource( 0, v_buffer, 0, sizeof(CUSTOMVERTEXNONORMAL));
+    
+	D3DXMATRIX rotate;
+
+	// Set the world matrix to identity for the skybox
+	D3DXMatrixTranslation(&matWorld, 0, 0, 0);
+	D3DXMatrixRotationY(&rotate, D3DXToRadian(60));
+	d3ddev->SetTransform( D3DTS_WORLD, &(rotate * matWorld) );
+
+    // Render the 6 faces of the skybox
+	// DrawPrimitive is used to draw polygons when the vertices are stored in a device resource 
+	// called a vertex buffer. Vertex buffers are blocks of memory allocated by the device that
+	// we use to store vertex data.
+    for ( ULONG i = 0; i < 6; ++i )
+    {
+		// Set the texture for this primitive
+        d3ddev->SetTexture( 0, skyTextures[i] );
+
+		// Render the face (one strip per face from the vertex buffer)  There are 2 primitives per face.
+        d3ddev->DrawPrimitive( D3DPT_TRIANGLESTRIP, i * 4, 2 );
+
+    } // Next side
+
+	d3ddev->SetRenderState( D3DRS_ZWRITEENABLE, true );
+	d3ddev->SetRenderState( D3DRS_LIGHTING, true );
+    
 
     // ADDED BY ZACK
-    room->Render(helper->GetTime(), 0);
+    
+	d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	//alpha in material's diffuse component is for alpha
+	d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+	d3ddev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+
+	//set blending factors so that alpha component determines transparancy
+	d3ddev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	d3ddev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
     window->Render(helper->GetTime(), 0);
-    floor->Render(helper->GetTime(), 0);
-    //cat->Render(helper->GetTime(), 1);
-    cat2->Render(helper->GetTime(), 1);
+	d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, true );
+	stencil->RenderReflection(cat, floor, helper);
+    cat->Render(helper->GetTime(), 1);
+	floor->Render(helper->GetTime(), 0);
+	d3ddev->SetRenderState( D3DRS_SPECULARENABLE, false );
+
+	room->Render(helper->GetTime(), 0);
     // END ADDED BY ZACK
+
+	
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -100,10 +160,11 @@ void DirectXHelper::cleanD3D(void)
     d3ddev->Release(); // close and release the 3D device
     d3d->Release(); // close and release Direct3D
 	//v_buffer->Release();    // close and release the vertex buffer
+	//pixelShader->Release();
 	delete camera;
 	delete input;
 	delete textbox;
-	delete p;
+	//delete p;
 }
 
 void ::DirectXHelper::init_graphics(void)
@@ -113,32 +174,106 @@ void ::DirectXHelper::init_graphics(void)
     floor = new Model(d3d, d3ddev, "floor.x");
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
-    //cat = new Model(d3d, d3ddev, "cat2.x");
-    cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated.x");
+	
+    cat = new Model(d3d, d3ddev, "cat2.x");
+	
     // END ADDED BY ZACK
 
+	float size = 1000.0f;
+
+	//initialize the skybox
+	CUSTOMVERTEXNONORMAL skyboxMesh[24] =
+	{
+	// Front quad, NOTE: All quads face inward
+	{-size, -size,  size,  0.0f, 1.0f },
+	{-size,  size,  size,  0.0f, 0.0f },
+	{ size, -size,  size,  1.0f, 1.0f },
+	{ size,  size,  size,  1.0f, 0.0f },
+	
+	// Back quad
+	{ size, -size, -size,  0.0f, 1.0f },
+	{ size,  size, -size,  0.0f, 0.0f },
+	{-size, -size, -size,  1.0f, 1.0f },
+	{-size,  size, -size,  1.0f, 0.0f },
+	
+	// Left quad
+	{-size, -size, -size,  0.0f, 1.0f },
+	{-size,  size, -size,  0.0f, 0.0f },
+	{-size, -size,  size,  1.0f, 1.0f },
+	{-size,  size,  size,  1.0f, 0.0f },
+	
+	// Right quad
+	{ size, -size,  size,  0.0f, 1.0f },
+	{ size,  size,  size,  0.0f, 0.0f },
+	{ size, -size, -size,  1.0f, 1.0f },
+	{ size,  size, -size,  1.0f, 0.0f },
+
+	// Top quad
+	{-size,  size,  size,  0.0f, 1.0f },
+	{-size,  size, -size,  0.0f, 0.0f },
+	{ size,  size,  size,  1.0f, 1.0f },
+	{ size,  size, -size,  1.0f, 0.0f },
+	
+	// Bottom quad
+	{-size, -size, -size,  0.0f, 1.0f },
+	{-size, -size,  size,  0.0f, 0.0f },
+	{ size, -size, -size,  1.0f, 1.0f },
+	{ size, -size,  size,  1.0f, 0.0f }
+	};
+
+
+
+
+
     // create a vertex buffer interface called v_buffer
-    /*d3ddev->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX), 0, CUSTOMFVF, D3DPOOL_MANAGED, &v_buffer, NULL);
+    d3ddev->CreateVertexBuffer(24*sizeof(CUSTOMVERTEXNONORMAL), 0, CUSTOMFVFNONORMAL, D3DPOOL_MANAGED, &v_buffer, NULL);
 
     VOID* pVoid;    // a void pointer
 
     // lock v_buffer and load the vertices into it
-    v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+    v_buffer->Lock(0, sizeof(CUSTOMVERTEXNONORMAL) * 24, (void**)&pVoid, 0);
+	 memcpy( pVoid, skyboxMesh, sizeof(CUSTOMVERTEXNONORMAL) * 24 );
     v_buffer->Unlock();
-	*/
+
+	// Load Textures.  I created a global array just to keep things simple.  The order of the images
+	// is VERY important.  The reason is the skybox mesh (g_SkyboxMesh[]) array was created above
+	// in this order. (ie. front, back, left, etc.)
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Front.png") , &skyTextures[0] );
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Back.png")  , &skyTextures[1] );
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Left.png")  , &skyTextures[2] );
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Right.png") , &skyTextures[3] );
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Top.png")   , &skyTextures[4] );
+    D3DXCreateTextureFromFile( d3ddev, ("images/SkyBox_Bottom.jpg"), &skyTextures[5] );
+	
 	D3DLIGHT9 light;
 	ZeroMemory(&light, sizeof(light));
 	light.Type = D3DLIGHT_SPOT;
 	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	light.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	light.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
-	light.Position = D3DXVECTOR3(-1.5f, 10.0f, -15.0f);
-	light.Direction = D3DXVECTOR3(0.0f, 1.0f, -4.0f);
-	light.Range = 50.0f;
+	light.Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	light.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Position = D3DXVECTOR3(0.0f, 14.0f, -5.0f);
+	light.Direction = D3DXVECTOR3(0.0f, -14.0f, 5.0f);
+	light.Range = 40.0f;
 	light.Falloff = 1.0f;
-	light.Theta = 45.0f;
-	light.Phi = 45.0f;
+	light.Theta = 10.0f;
+	light.Phi = 10.0f;
 
 	d3ddev->SetLight(0, &light);
 	d3ddev->LightEnable(0, true);
+
+	/*D3DLIGHT9 light2;
+	ZeroMemory(&light2, sizeof(light2));
+	light2.Type = D3DLIGHT_DIRECTIONAL;
+	light2.Diffuse = D3DXCOLOR(0.01f, 0.01f, 0.01f, 1.0f);
+	light2.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light2.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	//light2.Position = D3DXVECTOR3(0.0f, 20.0f, -13.0f);
+	light2.Direction = D3DXVECTOR3(0.0f, 1.0f, -4.0f);
+	//light2.Range = 50.0f;
+	//light2.Falloff = 1.0f;
+	//light2.Theta = 1.0f;
+	//light2.Phi = 2.0f;
+
+	d3ddev->SetLight(1, &light2);
+	//d3ddev->LightEnable(1, true);*/
 }

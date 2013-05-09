@@ -7,6 +7,7 @@
 #include "Input/Input.h"
 #include "Textbox/Textbox.h"
 #include "Particles/Particles.h";
+#include "Stencil/Stencil.h"
 
 //ADDED BY ZACK
 #include "Model/Model.h"
@@ -27,6 +28,9 @@ private:
 	LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
 	LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
 	LPDIRECT3DVERTEXBUFFER9 v_buffer;    // the pointer to the vertex buffer
+	IDirect3DPixelShader9* pixelShader;
+	LPDIRECT3DTEXTURE9 skyTextures[6];
+	D3DXVECTOR3 lightDir;
 
     // ADDITIONS BY ZACK
     Model *room;
@@ -41,6 +45,7 @@ private:
 	Textbox* textbox;
 	Particles* p;
 	Helper* helper;
+	Stencil* stencil;
 
 	float newYAngle;
 	float xPosition;

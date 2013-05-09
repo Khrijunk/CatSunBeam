@@ -158,5 +158,10 @@ void Input::CheckForInput()
 			
 			leftButtonWasDown = false;
 		}
+
+		textbox->SetString("Camera Position: ");
+		textbox->AppendToString("x: " + helper->toString(camera->GetPosition()->x));
+		textbox->AppendToString("y: " + helper->toString(camera->GetPosition()->y));
+		textbox->AppendToString("z: " + helper->toString(camera->GetPosition()->z));
 			
 }

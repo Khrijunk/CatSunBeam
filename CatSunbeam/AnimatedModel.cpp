@@ -4,6 +4,7 @@ AnimatedModel::AnimatedModel(LPDIRECT3D9 graphics, LPDIRECT3DDEVICE9 device, LPC
 {
   d3d = graphics;
   d3ddev = device;
+  pos = D3DXVECTOR3(0.0f, 0.1f, 5.0f);
 
   MeshAllocation MemAllocator;    // create a mesh allocation class
 
@@ -40,7 +41,7 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
   static float index = 0.0f; index+=0.03f;    // an ever-increasing float value
     //D3DXMATRIX matRotateY;    // a matrix to store the rotation for each triangle
   D3DXMATRIX transform;
-  D3DXMatrixTranslation(&transform, 1.5f, 0.1f, 0.0f);
+  D3DXMatrixTranslation(&transform, pos.x, pos.y, pos.z);
     //D3DXMatrixRotationY(&matRotateY, index);    // the rotation matrix
     d3ddev->SetTransform(D3DTS_WORLD, &transform);    // set the world transform
     // if the mesh is animated...
@@ -48,7 +49,7 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
     {
         static DWORD Time;// = GetTickCount();
         // move the animation forward by the elapsed time
-        AnimationController->AdvanceTime((GetTickCount() - Time) * 150.0f, NULL);
+        AnimationController->AdvanceTime((GetTickCount() - Time) * 75.0f, NULL);
       //AnimationController->AdvanceTime(deltaTime * 3.0f, NULL);
         // reset Time for the next time through
         Time = GetTickCount();
@@ -59,6 +60,31 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
     update_mesh_containers((CUSTOM_FRAME*)TopFrame, GetTickCount());
     // render each mesh container
     draw_mesh((CUSTOM_FRAME*)TopFrame);
+}
+
+void AnimatedModel::Render(float deltaTime, bool reflection)
+{
+	static float index = 0.0f; index+=0.03f;    // an ever-increasing float value
+    //D3DXMATRIX matRotateY;    // a matrix to store the rotation for each triangle
+    // if the mesh is animated...
+    if(AnimationController)
+    {
+        static DWORD Time;// = GetTickCount();
+        // move the animation forward by the elapsed time
+        AnimationController->AdvanceTime((GetTickCount() - Time) * 75.0f, NULL);
+      //AnimationController->AdvanceTime(deltaTime * 3.0f, NULL);
+        // reset Time for the next time through
+        Time = GetTickCount();
+    }
+    // update each combined matrix
+    update_frames((CUSTOM_FRAME*)TopFrame, NULL);
+    // update the mesh containers
+    update_mesh_containers((CUSTOM_FRAME*)TopFrame, GetTickCount());
+    // render each mesh container
+	if(reflection)
+		draw_mesh((CUSTOM_FRAME*)TopFrame);
+	else
+		draw_shadow_mesh((CUSTOM_FRAME*)TopFrame);
 }
 
 void AnimatedModel::draw_mesh(CUSTOM_FRAME* pFrame)
@@ -84,6 +110,27 @@ void AnimatedModel::draw_mesh(CUSTOM_FRAME* pFrame)
     // run for the first child (which will then run all other children)
     if(pFrame->pFrameFirstChild)
         draw_mesh((CUSTOM_FRAME*)pFrame->pFrameFirstChild);
+};
+
+void AnimatedModel::draw_shadow_mesh(CUSTOM_FRAME* pFrame)
+{
+    // cast the pFrame's mesh container pointer to a CUSTOM_MESHCONTAINER*
+    CUSTOM_MESHCONTAINER* pMeshContainer = (CUSTOM_MESHCONTAINER*)pFrame->pMeshContainer;
+    if(pMeshContainer)
+    {
+        // for each material...
+        for(UINT i = 0; i < pMeshContainer->NumMaterials; i++)
+        {
+            // draw the subset!
+            pMeshContainer->pFinalMesh->DrawSubset(i);
+        }
+    }
+    // run for all siblings
+    if(pFrame->pFrameSibling)
+        draw_shadow_mesh((CUSTOM_FRAME*)pFrame->pFrameSibling);
+    // run for the first child (which will then run all other children)
+    if(pFrame->pFrameFirstChild)
+        draw_shadow_mesh((CUSTOM_FRAME*)pFrame->pFrameFirstChild);
 };
 
 void AnimatedModel::update_mesh_containers(CUSTOM_FRAME* pFrame, double long time)
@@ -161,3 +208,8 @@ void AnimatedModel::link_frames(CUSTOM_FRAME* pFrame)
     if(pFrame->pFrameFirstChild)
         link_frames((CUSTOM_FRAME*)pFrame->pFrameFirstChild);
 };
+
+D3DXVECTOR3 AnimatedModel::getPosition()
+{
+	return pos;
+}

@@ -12,6 +12,8 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
   ID3DXBuffer* adjBuffer = 0;
   materialBuffer = 0; // material buffer
   DWORD materialCount = 0; // number of materials
+  catPos = D3DXVECTOR3(0, 0, 10); // initial position of the cat
+  D3DXMatrixRotationY(&catRotation, 3.14f/2);
 
   // Attempt to load the model file onto video memory
   result = D3DXLoadMeshFromX(filePath, D3DXMESH_MANAGED, d3ddev, &adjBuffer, &materialBuffer, 0, &materialCount, &_mesh);
@@ -26,8 +28,20 @@ Model::Model(LPDIRECT3D9 d3d, LPDIRECT3DDEVICE9 d3ddev, LPCSTR filePath)
     for (int i = 0; i < (int)materialCount; i++)
     {
       // MatD3D.Ambient is not initialized when loaded, initializing it now
-      materials[i].MatD3D.Ambient = materials[i].MatD3D.Specular = materials[i].MatD3D.Diffuse;
-	  materials[i].MatD3D.Power = 5;
+		if(filePath == "cat2.x" || filePath == "floor.x")
+		{
+			materials[i].MatD3D.Ambient = materials[i].MatD3D.Diffuse;
+		}
+		else if(filePath == "room.x")
+		{
+			materials[i].MatD3D.Ambient = materials[i].MatD3D.Diffuse;
+			materials[i].MatD3D.Specular.a = 0;
+		}
+		else if(filePath == "window.x")
+		{
+			materials[i].MatD3D.Diffuse.a = .2;
+		}
+	  //materials[i].MatD3D.Power = 5;
 
       // saving the ith material to memory
       _materials.push_back(&materials[i].MatD3D);
@@ -68,11 +82,10 @@ bool Model::Render(float deltaTime, int modelReference)
     D3DMATRIX world;
     if (modelReference == 1)
     {
-
-      D3DXMATRIX transform;
-      //D3DXMatrixRotationZ(&transform, -1.57f);
-      D3DXMatrixIdentity(&transform);
-      world = transform;
+		D3DXMATRIX transform;
+		D3DXMatrixTranslation(&transform, catPos.x, catPos.y, catPos.z);
+		  //D3DXMatrixIdentity(&transform);
+      world = catRotation * transform;
     }
     else
     {
@@ -93,6 +106,22 @@ bool Model::Render(float deltaTime, int modelReference)
   return true;
 }
 
+bool Model::Render(float deltaTime)
+{
+	if (_d3ddev)
+	{
+		// render
+		for (int i = 0; i < (int)_materials.size(); i++)
+		{
+		  _d3ddev->SetMaterial(_materials[i]);
+		  _d3ddev->SetTexture(0, _textures[i]);
+		  _mesh->DrawSubset(i);
+		}
+		CalculateNormals();
+	}
+	return true;
+}
+
 void Model::CalculateNormals()
 {
   if (!(_mesh->GetFVF() & D3DFVF_NORMAL))
@@ -111,4 +140,14 @@ Model::~Model()
   _textures.~vector();
   _mesh->Release();
   materialBuffer->Release();
+}
+
+D3DXVECTOR3 Model::getCatPos()
+{
+	return catPos;
+}
+
+D3DXMATRIX Model::getCatRotation()
+{
+	return catRotation;
 }
