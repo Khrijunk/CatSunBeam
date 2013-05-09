@@ -100,9 +100,10 @@
     <Image Include="wood2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cat.x" />
-    <None Include="CatSunBeam16.x" />
+    <None Include="floor.x" />
+    <None Include="room.x" />
     <None Include="tiny.x" />
+    <None Include="window.x" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

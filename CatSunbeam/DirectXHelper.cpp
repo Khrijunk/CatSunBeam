@@ -81,7 +81,9 @@ void DirectXHelper::renderFrame(void)
 	p->run_particles(d3ddev);
 
     // ADDED BY ZACK
-    mesh->Render(helper->GetTime(), 0);
+    room->Render(helper->GetTime(), 0);
+    window->Render(helper->GetTime(), 0);
+    floor->Render(helper->GetTime(), 0);
     cat->Render(helper->GetTime(), 1);
     // END ADDED BY ZACK
 
@@ -107,7 +109,9 @@ void ::DirectXHelper::init_graphics(void)
 {
 
     // ADDED BY ZACK
-    mesh = new Model(d3d, d3ddev, "CatSunBeam16.x");
+    floor = new Model(d3d, d3ddev, "floor.x");
+    window = new Model(d3d, d3ddev, "window.x");
+    room = new Model(d3d, d3ddev, "room.x");
     cat = new Model(d3d, d3ddev, "cat2.x");
     // END ADDED BY ZACK
 

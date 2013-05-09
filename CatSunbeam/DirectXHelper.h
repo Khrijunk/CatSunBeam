@@ -28,7 +28,9 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 v_buffer;    // the pointer to the vertex buffer
 
     // ADDITIONS BY ZACK
-    Model *mesh;
+    Model *room;
+    Model *window;
+    Model *floor;
     Model *cat;
     // END ADDITIONS BY ZACK
 
