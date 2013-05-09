@@ -132,13 +132,13 @@
     <None Include="tiny.x">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="floor.x">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="room.x">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="window.x">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="floor.x">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
