@@ -54,7 +54,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	v.y =  -.25f;
 	v.z = 2.0f;
 	a.x = 0.0f;
-	a.y = .05f;
+	a.y = .15f;
 	a.z = 0.0f;
 	p = new Particles(s,m,m1,v,a);
 	p->intBuffers(d3ddev);
