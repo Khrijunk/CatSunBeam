@@ -40,15 +40,47 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	textbox = new Textbox(d3ddev, 16, rect);
 	input = new Input(d3ddev, camera, textbox);
 	stencil = new Stencil(d3ddev);
-	p = new Particles();
+	D3DXVECTOR3 s,m,m1,v,a;
+	s.x = 0.0f;
+	s.y = 10.0f;
+	s.z = -10.0f;
+	m.x = -3.0f;
+	m.y = 0.0f;
+	m.z = -10.0f;
+	m1.x = 0.0f;
+	m1.y = 10.0f;
+	m1.z = 10.0f;
+	v.x = 2.0f;
+	v.y =  -.25f;
+	v.z = 2.0f;
+	a.x = 0.0f;
+	a.y = .15f;
+	a.z = 0.0f;
+	p = new Particles(s,m,m1,v,a);
+	p->intBuffers(d3ddev);
+	D3DXVECTOR3 s2,mm,mm1,v1,a1;
+	s2.x = 0.0f;
+	s2.y = 3.0f;
+	s2.z = 3.0f;
+	mm.x = -15.0f;
+	mm.y = -15.0f;
+	mm.z = -15.0f;
+	mm1.x = 15.0f;
+	mm1.y = 15.0f;
+	mm1.z = 15.0f;
+	v1.x = 0;
+	v1.y = 0;
+	v1.z = 0;
+	a1.x = 0.0f;
+	a1.y = .05f;
+	a1.z = 0.05f;
+	//flame = new Flames(s2,mm,mm1,v1,a1);
+	//flame->intBuffers(d3ddev);
+
 	helper = new Helper();
 	input->initDInput(hInstance, hWnd);
 
 	
-	//p->initBuffer(v_buffer);
-	//p->intBuffers(d3ddev);
-	//p.set_particle(camera->xPosition,camera->yPosition,camera->zPosition,d3ddev);
-	//p.active = true;
 }
 
 
@@ -88,7 +120,7 @@ void DirectXHelper::renderFrame(void)
 
 	//d3ddev->SetTransform(D3DTS_WORLD, &(matScale * matTranslate));
     //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
-	//p->run_particles(d3ddev);
+	p->run_particles(d3ddev,0);
 
 	d3ddev->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );
     d3ddev->SetRenderState( D3DRS_ZWRITEENABLE, false );
