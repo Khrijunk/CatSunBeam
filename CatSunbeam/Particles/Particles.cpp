@@ -158,7 +158,7 @@ void Particles::reset_particle()
 	position.z = start.z;
 	velocity.x = random_number(-2.0f,2.0f);
 	velocity.y = startV.y;
-	velocity.z = random_number(-2.0f,2.0f);
+	velocity.z = random_number(-5.0f,5.0f);
 	acceleration.x = startA.x;
 	acceleration.y = startA.y;
 	acceleration.z = startA.z;
