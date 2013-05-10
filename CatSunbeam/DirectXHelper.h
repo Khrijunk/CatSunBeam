@@ -44,6 +44,7 @@ private:
 	Input* input;
 	Textbox* textbox;
 	Particles* p;
+	//Flames* flame;
 	Helper* helper;
 	Stencil* stencil;
 
