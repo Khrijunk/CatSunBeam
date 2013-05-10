@@ -5,6 +5,7 @@ AnimatedModel::AnimatedModel(LPDIRECT3D9 graphics, LPDIRECT3DDEVICE9 device, LPC
   d3d = graphics;
   d3ddev = device;
   pos = D3DXVECTOR3(0.0f, 0.1f, 5.0f);
+  Time = 0.0f;
 
   MeshAllocation MemAllocator;    // create a mesh allocation class
 
@@ -47,13 +48,22 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
     // if the mesh is animated...
     if(AnimationController)
     {
-        static DWORD Time = GetTickCount64();
-
+        /*static DWORD Time = GetTickCount64();
         // move the animation forward by the elapsed time
         AnimationController->AdvanceTime((GetTickCount64() - Time) * 0.001f, NULL);
-
         // reset Time for the next time through
-        Time = GetTickCount64();
+        Time = GetTickCount64();*/
+
+      if (Time < 2)
+      {
+        AnimationController->AdvanceTime(0.02f, NULL);
+        Time += .02f;
+      }
+      else if (Time > 3 && Time < 5.7)
+      {
+        AnimationController->AdvanceTime(0.02f, NULL);
+        Time += .02f;
+      }
     }
     // update each combined matrix
     update_frames((CUSTOM_FRAME*)TopFrame, NULL);

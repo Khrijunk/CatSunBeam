@@ -6,13 +6,14 @@
 #include "../Textbox/Textbox.h"
 #include "../Helper.h"
 #include "../Picking.h"
+#include "../AnimatedModel.h"
 
 class Input
 {
 public:
 	Input(LPDIRECT3DDEVICE9 device, CCamera *cam, Textbox* text);
 	~Input();
-	void CheckForInput();
+    void CheckForInput(AnimatedModel *cat2);
 	void initDInput(HINSTANCE hInstance, HWND hWnd);
 
 private:

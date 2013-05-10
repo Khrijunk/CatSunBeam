@@ -18,7 +18,7 @@ class AnimatedModel
     D3DXMATRIX* FinalMatrices;    // a buffer for the matrices in their final state
     int MaxFrames;    // the highest number of frames a mesh container can be affected by
 	D3DXVECTOR3 getPosition();
-    DWORD Time;
+    float Time;
 
     AnimatedModel(LPDIRECT3D9 graphics, LPDIRECT3DDEVICE9 device, LPCSTR filePath);
     ~AnimatedModel();

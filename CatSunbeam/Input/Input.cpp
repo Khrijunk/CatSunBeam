@@ -62,7 +62,7 @@ void Input::initDInput(HINSTANCE hInstance, HWND hWnd)
 
 }
 
-void Input::CheckForInput()
+void Input::CheckForInput(AnimatedModel *cat2)
 {
 	
 	//create keyboard array
@@ -143,20 +143,35 @@ void Input::CheckForInput()
 			Ray ray;
 			ray = picker->CalcPickingRay(mousePoint.x, mousePoint.y);
 			
-			BoundingSphere sphere;
+            D3DXVECTOR3 cat = cat2->getPosition();
 
-			sphere.center = D3DXVECTOR3(0,0,0);
-			sphere.radius = 3;
+            D3DXVECTOR3 *position = new D3DXVECTOR3(cat.x, cat.y + 2.0f, cat.z + 2.5f);
+            BoundingSphere sphere;
+            sphere.center = *position;
+			sphere.radius = 2;
 
-			if(picker->PickingTest(&ray, &sphere))
+            D3DXVECTOR3 *position2 = new D3DXVECTOR3(cat.x, cat.y + 2.5f, cat.z - 2.5f);
+            BoundingSphere sphere2;
+            sphere2.center = *position2;
+			sphere2.radius = 2;
+
+			if(picker->PickingTest(&ray, &sphere2))
 			{
-				textbox->SetString("You clicked the white triangle");
-			}
-			else
+              cat2->AnimationController->SetTrackPosition(0, 0.0f);
+              cat2->Time = 0;
+            }
+			else if(picker->PickingTest(&ray, &sphere))
+            {
+              cat2->AnimationController->SetTrackPosition(0, 2.0f);
+              cat2->Time = 3.1;
+            }
+            else
 				textbox->ClearString();
 			
 			
 			leftButtonWasDown = false;
+            delete(position);
+            delete(position2);
 		}
 
 		textbox->SetString("Camera Position: ");

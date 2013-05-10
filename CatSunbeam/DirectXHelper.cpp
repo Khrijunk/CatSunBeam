@@ -119,7 +119,7 @@ void DirectXHelper::renderFrame(void)
 	helper->IncreaseTimer();
 	//textbox->SetString(helper->toString(helper->GetTime()));
 	//get input and place the camera
-	input->CheckForInput();
+	input->CheckForInput(cat2);
 	camera->Update();
 	d3ddev->SetTransform(D3DTS_VIEW, camera->GetViewMatrix());
 	d3ddev->SetTransform(D3DTS_PROJECTION, camera->GetProjectionMatrix());
@@ -232,7 +232,7 @@ void ::DirectXHelper::init_graphics(void)
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
 	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated6.x");
-    //cat = new Model(d3d, d3ddev, "cat2.x");
+    cat2->Time = 10;    //cat = new Model(d3d, d3ddev, "cat2.x");
 	
     // END ADDED BY ZACK
 
