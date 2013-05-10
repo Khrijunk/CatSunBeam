@@ -50,7 +50,7 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
         static DWORD Time = GetTickCount64();
 
         // move the animation forward by the elapsed time
-        AnimationController->AdvanceTime((GetTickCount64() - Time) * 0.0001f, NULL);
+        AnimationController->AdvanceTime((GetTickCount64() - Time) * 0.001f, NULL);
 
         // reset Time for the next time through
         Time = GetTickCount64();
@@ -65,14 +65,14 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
 
 void AnimatedModel::Render(float deltaTime, bool reflection)
 {
-	static float index = 0.0f; index+=0.03f;    // an ever-increasing float value
+	/*static float index = 0.0f; index+=0.03f;    // an ever-increasing float value
     //D3DXMATRIX matRotateY;    // a matrix to store the rotation for each triangle
     // if the mesh is animated...
     if(AnimationController)
     {
         static DWORD Time;// = GetTickCount();
         // move the animation forward by the elapsed time
-        AnimationController->AdvanceTime((GetTickCount() - Time) * 75.0f, NULL);
+        AnimationController->AdvanceTime((GetTickCount() - Time) * 0.001f, NULL);
       //AnimationController->AdvanceTime(deltaTime * 3.0f, NULL);
         // reset Time for the next time through
         Time = GetTickCount();
@@ -80,7 +80,7 @@ void AnimatedModel::Render(float deltaTime, bool reflection)
     // update each combined matrix
     update_frames((CUSTOM_FRAME*)TopFrame, NULL);
     // update the mesh containers
-    update_mesh_containers((CUSTOM_FRAME*)TopFrame, GetTickCount());
+    update_mesh_containers((CUSTOM_FRAME*)TopFrame, GetTickCount());*/
     // render each mesh container
 	if(reflection)
 		draw_mesh((CUSTOM_FRAME*)TopFrame);
@@ -105,12 +105,14 @@ void AnimatedModel::draw_mesh(CUSTOM_FRAME* pFrame)
             pMeshContainer->pFinalMesh->DrawSubset(i);
         }
     }
+	
     // run for all siblings
     if(pFrame->pFrameSibling)
         draw_mesh((CUSTOM_FRAME*)pFrame->pFrameSibling);
     // run for the first child (which will then run all other children)
     if(pFrame->pFrameFirstChild)
         draw_mesh((CUSTOM_FRAME*)pFrame->pFrameFirstChild);
+	
 };
 
 void AnimatedModel::draw_shadow_mesh(CUSTOM_FRAME* pFrame)
@@ -126,12 +128,15 @@ void AnimatedModel::draw_shadow_mesh(CUSTOM_FRAME* pFrame)
             pMeshContainer->pFinalMesh->DrawSubset(i);
         }
     }
-    // run for all siblings
+	
+	
+		// run for all siblings
     if(pFrame->pFrameSibling)
         draw_shadow_mesh((CUSTOM_FRAME*)pFrame->pFrameSibling);
     // run for the first child (which will then run all other children)
     if(pFrame->pFrameFirstChild)
         draw_shadow_mesh((CUSTOM_FRAME*)pFrame->pFrameFirstChild);
+	
 };
 
 void AnimatedModel::update_mesh_containers(CUSTOM_FRAME* pFrame, double long time)
