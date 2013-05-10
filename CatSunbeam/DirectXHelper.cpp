@@ -17,8 +17,8 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
 	//d3dpp.BackBufferFormat = D3DFMT_D24S8;    // set the back buffer format to 32-bit
     d3dpp.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
     d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
-    //d3dpp.EnableAutoDepthStencil = true;
-	 d3dpp.EnableAutoDepthStencil = true;
+  
+	d3dpp.EnableAutoDepthStencil = true;
     d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     // create a device class using this information and the info from the d3dpp stuct
     d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &d3ddev);
