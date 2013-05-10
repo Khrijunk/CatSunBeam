@@ -231,7 +231,7 @@ void ::DirectXHelper::init_graphics(void)
     floor = new Model(d3d, d3ddev, "floor.x");
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
-	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated.x");
+	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated6.x");
     //cat = new Model(d3d, d3ddev, "cat2.x");
 	
     // END ADDED BY ZACK

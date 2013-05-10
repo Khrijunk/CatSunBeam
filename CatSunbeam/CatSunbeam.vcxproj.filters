@@ -186,5 +186,8 @@
     <None Include="floorsubdiv.x">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="siamesweCatAnimated6.x">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
