@@ -163,7 +163,7 @@ void Particles::reset_particle()
 	acceleration.y = startA.y;
 	acceleration.z = startA.z;
     radius = .5f;
-    lifespan = 5.0f;
+    lifespan = 100.0f;
     life = 0.0f;
 
     return;
