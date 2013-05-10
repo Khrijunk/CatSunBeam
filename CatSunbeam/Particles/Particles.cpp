@@ -143,6 +143,14 @@ void Particles::run_particle(float seconds)
     velocity += acceleration * seconds;
     position += velocity * seconds;
 
+	if(position.y < 11 && position.z < -14)
+		reset_particle();
+
+	if(position.z > -14)
+	{
+		if(!((position.y > ((-11/45)*position.z)) && (position.y < ((-18/45)*position.z + 14))))
+			reset_particle();
+	}
 	if((position.y <= min.y || position.y > max.y) || (position.x <= min.x || position.x > max.x)||(position.z <= min.z || position.z > max.z)){
 		reset_particle();
 	}
@@ -157,13 +165,13 @@ void Particles::reset_particle()
 	position.y = start.y;
 	position.z = start.z;
 	velocity.x = random_number(-2.0f,2.0f);
-	velocity.y = startV.y;
-	velocity.z = random_number(-5.0f,5.0f);
+	velocity.y = random_number(-1.0f, 0.0f);//startV.y;
+	velocity.z = random_number(0.5f,1.0f);
 	acceleration.x = startA.x;
 	acceleration.y = startA.y;
 	acceleration.z = startA.z;
     radius = .5f;
-    lifespan = 100.0f;
+    lifespan = 1000000.0f;
     life = 0.0f;
 
     return;
@@ -190,7 +198,8 @@ void Particles::run_particles(LPDIRECT3DDEVICE9 d3ddev, int a)
         {
             particle[index].run_particle(time / 1000.0f);
             particle[index].set_particle(camx, camy, camz,d3ddev);
-            particle[index].render_particle(d3ddev, a);
+			if(particle[index].position.z > -15)
+				particle[index].render_particle(d3ddev, a);
         }
     }
    // d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
