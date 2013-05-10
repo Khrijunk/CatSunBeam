@@ -18,7 +18,7 @@ void DirectXHelper::initD3D(HWND hWnd, HINSTANCE hInstance)
     d3dpp.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
     d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
     //d3dpp.EnableAutoDepthStencil = true;
-	 d3dpp.EnableAutoDepthStencil = true;
+	d3dpp.EnableAutoDepthStencil = true;
     d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     // create a device class using this information and the info from the d3dpp stuct
     d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &d3ddev);
@@ -231,7 +231,7 @@ void ::DirectXHelper::init_graphics(void)
     floor = new Model(d3d, d3ddev, "floor.x");
     window = new Model(d3d, d3ddev, "window.x");
     room = new Model(d3d, d3ddev, "room.x");
-	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated.x");
+	cat2 = new AnimatedModel(d3d, d3ddev, "siamesweCatAnimated6.x");
     //cat = new Model(d3d, d3ddev, "cat2.x");
 	
     // END ADDED BY ZACK

@@ -47,12 +47,13 @@ void AnimatedModel::Render(float deltaTime, int modelReference)
     // if the mesh is animated...
     if(AnimationController)
     {
-        static DWORD Time;// = GetTickCount();
+        static DWORD Time = GetTickCount64();
+
         // move the animation forward by the elapsed time
-        AnimationController->AdvanceTime((GetTickCount() - Time) * 75.0f, NULL);
-      //AnimationController->AdvanceTime(deltaTime * 3.0f, NULL);
+        AnimationController->AdvanceTime((GetTickCount64() - Time) * 0.0001f, NULL);
+
         // reset Time for the next time through
-        Time = GetTickCount();
+        Time = GetTickCount64();
     }
     // update each combined matrix
     update_frames((CUSTOM_FRAME*)TopFrame, NULL);

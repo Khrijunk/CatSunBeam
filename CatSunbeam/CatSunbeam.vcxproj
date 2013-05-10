@@ -115,6 +115,7 @@
     <None Include="floorsubdiv.x" />
     <None Include="room.x" />
     <None Include="siamesweCatAnimated.x" />
+    <None Include="siamesweCatAnimated6.x" />
     <None Include="tiny.x" />
     <None Include="window.x" />
   </ItemGroup>
